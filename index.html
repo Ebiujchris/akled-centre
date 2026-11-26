@@ -25,9 +25,16 @@
         </button>
         <nav class="main-nav" id="main-nav" aria-label="Main navigation">
           <a href="#top">Home</a>
-          <a href="#about">About</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-controls="about-menu">
+              About <span class="dropdown-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="nav-dropdown-menu" id="about-menu">
+              <a href="#about">About AKLED</a>
+              <a href="team.html">Our Team</a>
+            </div>
+          </div>
           <a href="#services">Services</a>
-          <a href="#team">Consultants</a>
           <a href="#values">Values</a>
           <a class="nav-cta" href="#contact">Work with us</a>
         </nav>
@@ -141,88 +148,6 @@
             <div><span>04</span><h3>Quality</h3></div>
             <div><span>05</span><h3>Innovation</h3></div>
             <div><span>06</span><h3>Accountability</h3></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="team section" id="team">
-        <div class="container">
-          <div class="section-heading team-heading">
-            <div>
-              <p class="section-kicker">Team</p>
-              <h2>Consultants with depth and breadth</h2>
-            </div>
-            <p>Experienced professionals bringing research, technical, and management expertise to every assignment.</p>
-          </div>
-          <div class="team-carousel">
-            <div class="carousel-controls">
-              <p class="carousel-status" aria-live="polite">1 / 6</p>
-              <div>
-                <button class="carousel-button carousel-prev" type="button" aria-label="Previous consultant" disabled>←</button>
-                <button class="carousel-button carousel-next" type="button" aria-label="Next consultant">→</button>
-              </div>
-            </div>
-            <div class="team-grid" role="region" aria-label="Consultant profiles" aria-roledescription="carousel" tabindex="0">
-            <article class="profile-card lead" role="group" aria-roledescription="slide" aria-label="1 of 6">
-              <div class="profile-top"><span>Lead Consultant</span><span>01</span></div>
-              <div class="profile-identity">
-                <img class="profile-photo" src="public/images/swizen%20image.png" alt="Swizen Kyomuhendo" loading="lazy" />
-                <div>
-                  <h3>Swizen Kyomuhendo, PhD</h3>
-                  <p class="profile-role">Senior Consultant</p>
-                </div>
-              </div>
-              <p>A senior consultant with over 20 years’ experience in research, university teaching, consultancy, and community outreach.</p>
-              <button class="profile-toggle" type="button" aria-expanded="false">Read profile <span>+</span></button>
-              <div class="profile-detail">
-                <p>Qualified in social policy and planning, organization development, project and agency management, and research, monitoring and evaluation. His experience includes assignments for UNICEF, UNAIDS, UNDP, WHO, DFID, USAID, government ministries and departments, and numerous civil society organizations.</p>
-              </div>
-            </article>
-
-            <article class="profile-card" role="group" aria-roledescription="slide" aria-label="2 of 6">
-              <div class="profile-top"><span>Resident Consultant</span><span>02</span></div>
-              <h3>Edward Kyomuhendo</h3>
-              <p class="profile-role">Resident Consultant</p>
-              <div class="profile-accent"></div>
-            </article>
-
-            <article class="profile-card" role="group" aria-roledescription="slide" aria-label="3 of 6">
-              <div class="profile-top"><span>Resident Consultant</span><span>03</span></div>
-              <h3>Brian Kyomuhendo</h3>
-              <p class="profile-role">Resident Consultant</p>
-              <div class="profile-accent"></div>
-            </article>
-
-            <article class="profile-card" role="group" aria-roledescription="slide" aria-label="4 of 6">
-              <div class="profile-top"><span>Resident Consultant</span><span>04</span></div>
-              <h3>Ronald Kyomuhendo</h3>
-              <p class="profile-role">Environmental Engineering &amp; Management</p>
-              <button class="profile-toggle" type="button" aria-expanded="false">Read profile <span>+</span></button>
-              <div class="profile-detail">
-                <p>Specialist in environmental studies, spatial analysis, environmental management plans, pollution control, environmental audits, and health and safety risk assessment. His project experience includes UNICEF and WFP common country office premises in Mbuya and an environmental compliance audit for the Emergency Children’s Surgical Hospital in Entebbe.</p>
-              </div>
-            </article>
-
-            <article class="profile-card" role="group" aria-roledescription="slide" aria-label="5 of 6">
-              <div class="profile-top"><span>Associate Consultant</span><span>05</span></div>
-              <h3>Blasio Bisereko Bwambale</h3>
-              <p class="profile-role">Agriculture &amp; Project Management</p>
-              <button class="profile-toggle" type="button" aria-expanded="false">Read profile <span>+</span></button>
-              <div class="profile-detail">
-                <p>Agricultural officer and consultant with experience in project development, farmer training, sensitization, and education. He has worked with Smart Farming Uganda, Latitude Trade Company, Kabarole Resource and Research Centre, and Rwenzori Farmers’ Cooperative Union.</p>
-              </div>
-            </article>
-
-            <article class="profile-card" role="group" aria-roledescription="slide" aria-label="6 of 6">
-              <div class="profile-top"><span>Associate Consultant</span><span>06</span></div>
-              <h3>Bwampu Balinsngayo Ernest</h3>
-              <p class="profile-role">Economics, Statistics &amp; M&amp;E</p>
-              <button class="profile-toggle" type="button" aria-expanded="false">Read profile <span>+</span></button>
-              <div class="profile-detail">
-                <p>Economics and statistics graduate with a master’s in management studies, specializing in monitoring and evaluation. Experienced in program implementation, performance monitoring, work planning, budgeting, project review, data analysis, and farmer training in good agricultural practices.</p>
-              </div>
-            </article>
-          </div>
           </div>
         </div>
       </section>

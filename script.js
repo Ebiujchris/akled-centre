@@ -1,5 +1,7 @@
 const menuToggle = document.querySelector(".menu-toggle");
 const mainNav = document.querySelector(".main-nav");
+const aboutDropdown = document.querySelector(".nav-dropdown");
+const aboutDropdownToggle = document.querySelector(".nav-dropdown-toggle");
 
 menuToggle.addEventListener("click", () => {
   const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
@@ -8,10 +10,18 @@ menuToggle.addEventListener("click", () => {
   mainNav.classList.toggle("open", !isOpen);
 });
 
+aboutDropdownToggle.addEventListener("click", () => {
+  const isOpen = aboutDropdownToggle.getAttribute("aria-expanded") === "true";
+  aboutDropdownToggle.setAttribute("aria-expanded", String(!isOpen));
+  aboutDropdown.classList.toggle("open", !isOpen);
+});
+
 function closeMobileMenu() {
   menuToggle.setAttribute("aria-expanded", "false");
   menuToggle.setAttribute("aria-label", "Open menu");
   mainNav.classList.remove("open");
+  aboutDropdownToggle.setAttribute("aria-expanded", "false");
+  aboutDropdown.classList.remove("open");
 }
 
 mainNav.querySelectorAll("a").forEach((link) => {
@@ -19,6 +29,12 @@ mainNav.querySelectorAll("a").forEach((link) => {
 });
 
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && aboutDropdownToggle.getAttribute("aria-expanded") === "true") {
+    aboutDropdownToggle.setAttribute("aria-expanded", "false");
+    aboutDropdown.classList.remove("open");
+    aboutDropdownToggle.focus();
+  }
+
   if (event.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") {
     closeMobileMenu();
     menuToggle.focus();
@@ -36,44 +52,47 @@ document.querySelectorAll(".profile-toggle").forEach((button) => {
 });
 
 const teamTrack = document.querySelector(".team-grid");
-const profileCards = Array.from(teamTrack.querySelectorAll(".profile-card"));
-const previousProfile = document.querySelector(".carousel-prev");
-const nextProfile = document.querySelector(".carousel-next");
-const carouselStatus = document.querySelector(".carousel-status");
 
-function getCurrentProfileIndex() {
-  const firstCardOffset = profileCards[0].offsetLeft;
-  return profileCards.reduce((closest, card, index) => {
-    const cardOffset = card.offsetLeft - firstCardOffset;
-    const closestOffset = profileCards[closest].offsetLeft - firstCardOffset;
-    return Math.abs(cardOffset - teamTrack.scrollLeft) <
-      Math.abs(closestOffset - teamTrack.scrollLeft)
-      ? index
-      : closest;
-  }, 0);
+if (teamTrack) {
+  const profileCards = Array.from(teamTrack.querySelectorAll(".profile-card"));
+  const previousProfile = document.querySelector(".carousel-prev");
+  const nextProfile = document.querySelector(".carousel-next");
+  const carouselStatus = document.querySelector(".carousel-status");
+
+  function getCurrentProfileIndex() {
+    const firstCardOffset = profileCards[0].offsetLeft;
+    return profileCards.reduce((closest, card, index) => {
+      const cardOffset = card.offsetLeft - firstCardOffset;
+      const closestOffset = profileCards[closest].offsetLeft - firstCardOffset;
+      return Math.abs(cardOffset - teamTrack.scrollLeft) <
+        Math.abs(closestOffset - teamTrack.scrollLeft)
+        ? index
+        : closest;
+    }, 0);
+  }
+
+  function updateCarousel() {
+    const currentIndex = getCurrentProfileIndex();
+    const maxScroll = teamTrack.scrollWidth - teamTrack.clientWidth;
+
+    carouselStatus.textContent = `${currentIndex + 1} / ${profileCards.length}`;
+    previousProfile.disabled = teamTrack.scrollLeft <= 0;
+    nextProfile.disabled = teamTrack.scrollLeft >= maxScroll - 1;
+  }
+
+  function moveCarousel(direction) {
+    const currentIndex = getCurrentProfileIndex();
+    const target = profileCards[Math.max(0, Math.min(profileCards.length - 1, currentIndex + direction))];
+    const left = target.offsetLeft - profileCards[0].offsetLeft;
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+    teamTrack.scrollTo({ left, behavior });
+  }
+
+  previousProfile.addEventListener("click", () => moveCarousel(-1));
+  nextProfile.addEventListener("click", () => moveCarousel(1));
+  teamTrack.addEventListener("scroll", updateCarousel, { passive: true });
+  window.addEventListener("resize", updateCarousel);
+  updateCarousel();
 }
-
-function updateCarousel() {
-  const currentIndex = getCurrentProfileIndex();
-  const maxScroll = teamTrack.scrollWidth - teamTrack.clientWidth;
-
-  carouselStatus.textContent = `${currentIndex + 1} / ${profileCards.length}`;
-  previousProfile.disabled = teamTrack.scrollLeft <= 0;
-  nextProfile.disabled = teamTrack.scrollLeft >= maxScroll - 1;
-}
-
-function moveCarousel(direction) {
-  const currentIndex = getCurrentProfileIndex();
-  const target = profileCards[Math.max(0, Math.min(profileCards.length - 1, currentIndex + direction))];
-  const left = target.offsetLeft - profileCards[0].offsetLeft;
-  const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
-  teamTrack.scrollTo({ left, behavior });
-}
-
-previousProfile.addEventListener("click", () => moveCarousel(-1));
-nextProfile.addEventListener("click", () => moveCarousel(1));
-teamTrack.addEventListener("scroll", updateCarousel, { passive: true });
-window.addEventListener("resize", updateCarousel);
-updateCarousel();
 
 document.getElementById("year").textContent = new Date().getFullYear();
