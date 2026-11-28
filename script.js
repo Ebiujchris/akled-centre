@@ -167,21 +167,5 @@ if (teamTrack) {
   updateCarousel();
 }
 
-/* ── Footer nav links (injected dynamically) ─────────── */
-const footerDivs = document.querySelectorAll("footer .footer-grid > div:first-child");
-footerDivs.forEach((div) => {
-  const nav = document.createElement("nav");
-  nav.className = "footer-nav";
-  nav.setAttribute("aria-label", "Footer navigation");
-  nav.innerHTML = `
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="services.html">Services</a>
-    <a href="team.html">Team</a>
-    <a href="clientele.html">Clientele</a>
-  `;
-  div.appendChild(nav);
-});
-
 /* ── Copyright year ──────────────────────────────────── */
 document.getElementById("year").textContent = new Date().getFullYear();

@@ -540,9 +540,5 @@ footer div:first-child p { max-width: 100%; margin: 10px 0 0; color: rgba(255,25
 footer {
   border-top: 3px solid var(--gold);
 }
-.footer-nav { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
-.footer-nav a { color: rgba(255,255,255,.65); font-size: 13px; transition: color .2s; }
-.footer-nav a:hover { color: var(--gold-light); }
-
 /* ── Hero padding fix for fixed header ───────────────── */
 /* hero-grid already carries padding-top: 88px so no extra needed on .hero */
