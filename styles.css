@@ -57,6 +57,8 @@ button, input { font: inherit; }
 .nav-dropdown.open .nav-dropdown-menu { display: grid; }
 @media (min-width: 901px) {
   .nav-dropdown:hover .nav-dropdown-menu { display: grid; }
+  /* Bridge the gap between the toggle and the menu so hover doesn't break */
+  .nav-dropdown::after { content: ""; position: absolute; top: 100%; left: -18px; right: -18px; height: 20px; }
 }
 .nav-dropdown-menu a { padding: 10px 12px; border-radius: 8px; white-space: nowrap; }
 .nav-dropdown-menu a:hover, .nav-dropdown-menu a:focus-visible { background: var(--cream); }
