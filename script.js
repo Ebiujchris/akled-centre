@@ -1,3 +1,4 @@
+/* ── Nav: mobile menu toggle ─────────────────────────── */
 const menuToggle = document.querySelector(".menu-toggle");
 const mainNav = document.querySelector(".main-nav");
 const aboutDropdown = document.querySelector(".nav-dropdown");
@@ -34,13 +35,84 @@ document.addEventListener("keydown", (event) => {
     aboutDropdown.classList.remove("open");
     aboutDropdownToggle.focus();
   }
-
   if (event.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") {
     closeMobileMenu();
     menuToggle.focus();
   }
 });
 
+/* ── Sticky header on scroll ─────────────────────────── */
+const siteHeader = document.querySelector(".site-header");
+function updateHeader() {
+  siteHeader.classList.toggle("scrolled", window.scrollY > 40);
+}
+window.addEventListener("scroll", updateHeader, { passive: true });
+updateHeader();
+
+/* ── Scroll reveal (Intersection Observer) ───────────── */
+// Tag elements we want to animate
+const revealSelectors = [
+  ".section-heading",
+  ".service-card",
+  ".fieldwork-card",
+  ".values-grid > div",
+  ".content-card",
+  ".content-list li",
+  ".director-card",
+  ".profile-card",
+  ".impact-list > div",
+  ".about-story-image",
+  ".content-intro > p",
+  ".content-intro > h2",
+  ".sector-image-card",
+  ".service-image-card",
+  ".intro-grid > div",
+  ".experience-strip",
+  ".impact-copy",
+  ".subpage-hero-content",
+];
+
+revealSelectors.forEach((sel) => {
+  document.querySelectorAll(sel).forEach((el, i) => {
+    el.classList.add("reveal");
+    // Stagger siblings inside grid parents
+    const delay = Math.min(i % 5, 4);
+    if (delay > 0) el.classList.add(`reveal-delay-${delay}`);
+  });
+});
+
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.12 }
+);
+
+document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+
+/* ── Impact stat section highlight ───────────────────── */
+const impactList = document.querySelector(".impact-list");
+if (impactList) {
+  const statObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          impactList.classList.add("in-view");
+          statObserver.disconnect();
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+  statObserver.observe(impactList);
+}
+
+/* ── Team profile toggle ─────────────────────────────── */
 document.querySelectorAll(".profile-toggle").forEach((button) => {
   button.addEventListener("click", () => {
     const card = button.closest(".profile-card");
@@ -51,6 +123,7 @@ document.querySelectorAll(".profile-toggle").forEach((button) => {
   });
 });
 
+/* ── Team carousel ───────────────────────────────────── */
 const teamTrack = document.querySelector(".team-grid");
 
 if (teamTrack) {
@@ -74,7 +147,6 @@ if (teamTrack) {
   function updateCarousel() {
     const currentIndex = getCurrentProfileIndex();
     const maxScroll = teamTrack.scrollWidth - teamTrack.clientWidth;
-
     carouselStatus.textContent = `${currentIndex + 1} / ${profileCards.length}`;
     previousProfile.disabled = teamTrack.scrollLeft <= 0;
     nextProfile.disabled = teamTrack.scrollLeft >= maxScroll - 1;
@@ -95,4 +167,21 @@ if (teamTrack) {
   updateCarousel();
 }
 
+/* ── Footer nav links (injected dynamically) ─────────── */
+const footerDivs = document.querySelectorAll("footer .footer-grid > div:first-child");
+footerDivs.forEach((div) => {
+  const nav = document.createElement("nav");
+  nav.className = "footer-nav";
+  nav.setAttribute("aria-label", "Footer navigation");
+  nav.innerHTML = `
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="team.html">Team</a>
+    <a href="clientele.html">Clientele</a>
+  `;
+  div.appendChild(nav);
+});
+
+/* ── Copyright year ──────────────────────────────────── */
 document.getElementById("year").textContent = new Date().getFullYear();
